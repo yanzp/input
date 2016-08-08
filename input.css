@@ -1,0 +1,63 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+div#inputText {
+	font-family: Microsoft Yahei,Verdana,Helvetica,Arial,sans-serif;
+	font-size:14px;
+}
+div#inputText input {
+	height: 36px;
+	line-height: 36px;
+	width: 40%; 
+	margin: 0 0 2% 2%; 
+	padding: 0 2%;
+}
+div#inputText div.popup-list {
+	border-left: 1px solid #e5e5e5;
+	border-top: 1px solid #e5e5e5;
+	position: fixed;
+	bottom: -165px;
+	width: 100%; 
+	max-height: 165px;
+}
+div#inputText div.popup-list div {
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	border-bottom: 1px solid #e5e5e5;
+}
+div#inputText div.popup-list span {
+	display: block;
+	text-align: center;
+	-webkit-box-flex: 1;
+	-moz-box-flex: 1;
+	box-flex: 1;
+	height: 32px;
+	line-height: 32px;
+	border-right: 1px solid #e5e5e5;
+	width: 33.3%;
+	color: #666;
+	font-size: 14px;
+}
+div#inputText div.popup-list span:hover {
+	background: #ccc;
+}
+div#inputText div.tip {
+	height: 165px;
+    overflow-y: auto;
+}
+div#inputText div.tip span {
+    color: #333;
+    display: inline-block;
+    border: 1px solid #e5e5e5;
+    padding: 0 2%;
+    border-radius: 16px;
+    margin: 1% 2%;
+    background: #FAF9F9;
+    height: 32px;
+    line-height: 32px;
+    width: auto;
+    text-decoration: none;
+}
+

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+	<title>输入框模拟</title>
+	<link rel="stylesheet" type="text/css" href="input.css">
+</head>
+<body>
+	<div id="inputText">
+		<div id="txt">
+			<input type="text" name="amount" id="txt0" placeholder="数字框">
+			<input type="text" name="tag" id="txt1" placeholder="标签">
+			<input type="text" name="tag" id="txt2" placeholder="中文大写数字">
+		</div>
+		<div class="popup">
+			<div class="popup-list" id="num0">
+				<div>
+					<span>1</span>
+					<span>2</span>
+					<span>3</span>
+				</div>
+				<div>
+					<span>4</span>
+					<span>5</span>
+					<span>6</span>
+				</div>
+				<div>
+					<span>7</span>
+					<span>8</span>
+					<span>9</span>
+				</div>
+				<div>
+					<span class="back">关闭</span>
+					<span>0</span>
+					<span class="del">del</span>
+				</div>
+			</div>
+			<div class="tip popup-list" id="num1">
+				<span>标签一表</span>
+				<span>标签二</span>
+				<span>标签三</span>
+				<span>标签四哈哈哈</span>
+				<span>标签五</span>
+				<span>标签六</span>
+				<span>标签七看得见</span>
+				<span>标签八</span>
+				<span>标签一</span>
+				<span>标签二</span>
+				<span>标签三</span>
+				<span>标签四</span>
+				<span>标签五哦</span>
+				<span>标签六</span>
+				<span>标签七</span>
+				<span>标</span>
+				<span>标签一</span>
+				<span>标签二</span>
+				<span>标签三</span>
+				<span>标签四</span>
+				<span>标签五</span>
+				<span>标签六</span>
+				<span>标签七</span>
+				<span>标签八</span>
+				<span>标签一</span>
+				<span>标签二</span>
+				<span>标签三</span>
+				<span>标签四</span>
+				<span>标签五</span>
+				<span>标签六</span>
+				<span>标签七</span>
+				<span>标签八</span>
+			</div>
+			<div class="popup-list" id="num2">
+				<div>
+					<span>零</span>
+					<span>壹</span>
+					<span>贰</span>
+					<span>叁</span>
+				</div>
+				<div>
+					<span>肆</span>
+					<span>伍</span>
+					<span>陆</span>
+					<span>柒</span>
+				</div>
+				<div>
+					<span>捌</span>
+					<span>玖</span>
+					<span>拾</span>
+					<span>佰</span>
+				</div>
+				<div>
+					<span class="back">关闭</span>
+					<span>仟</span>
+					<span>万</span>
+					<span class="del">del</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery.1.8.js"></script>
+	<script type="text/javascript">
+	var inputTagEvent = (function(){
+
+		$(function(){
+
+			var h = 165;
+
+			$('#txt input').each(function(){
+
+				var id = $(this).attr("id").replace('txt','');
+
+				// 禁用手机自带键盘
+				forbidFocus(id);
+
+				// 显示自定义键盘
+				showDialog(id);
+
+				// 文本框获取值
+				getValue(id);
+			});
+
+
+			// 打开键盘
+			function showDialog(i) {
+				$('#txt'+i).on('click', function(){
+					$('#num'+i).animate({bottom: "0"}, 'fast');
+					hideDialog(i);
+				});
+			}
+
+			// 关闭键盘
+			function hideDialog(i) {
+				$('.popup-list').not('#num'+i).animate({bottom: -h + 'px'}, 'fast');
+			}
+
+			// 关闭按钮
+			$('.back').on('click',function(){
+				$(this).parents('.popup-list').animate({bottom: -h + 'px'}, 'fast');
+			});
+
+			// 文本框获取值
+			function getValue(i) {
+				
+				var value = "";
+
+				$('#num'+i).find('span').each(function(){
+
+					$(this).click(function(){
+
+						if($(this).hasClass('del')){
+							value = $('#txt'+i).val().substring(0, $('#txt'+i).val().length - 1);
+						} else if($(this).hasClass('back')) {
+							value = value;
+						} else if($(this).closest('.tip').length > 0) {
+							value = $(this).text();
+						} else {
+							value += $(this).text();
+						}
+
+						$("#txt"+i).val(value);	
+
+					});
+
+				});	
+			}
+			
+			// 禁用手机自带的键盘输入框
+			function forbidFocus(i){
+				$('#txt'+i).focus(function(){
+					document.activeElement.blur();
+				});
+			}
+
+			// 获取提示标签的数据
+			getTab();
+			function getTab(){
+		        $.ajax({
+		            type: "post",
+		            dataType:"json",
+		            url: "list.json",
+		            success : function(data) {
+		            	var jsonList = "";
+			            for (var i = 0; i < data.length; i++) {
+			                jsonList += '<span>'+data[i]+'</span>';
+			            }
+			            $('#num1').append(jsonList);
+		            }
+		        });
+		    }
+
+		});
+
+	})();
+
+	</script>
+</body>
+</html>
